@@ -1,17 +1,20 @@
 import {useState} from "react"
 import {AircraftDto} from "../models/amsModels";
-import {ImageType} from "../models/types"
+import {ImageType,EditAircraftType} from "../models/types"
+
+import { useAppDispatch  } from '../redux/store';
+import { editAircraft, addAircraft } from '../redux/asyncActions';
 
 export type EditAircraftProps = {
-    onAdd: Function;
-    onEdit: Function;
     aircraft?: AircraftDto;
     setModalActive: Function;
     isAdd: boolean;
     imageUrl: React.MutableRefObject<string>;
 }
 
-export const EditAircraft: React.FC<EditAircraftProps> = ({onAdd, onEdit, aircraft, setModalActive, isAdd, imageUrl}) => {
+export const EditAircraft: React.FC<EditAircraftProps> = ({aircraft, setModalActive, isAdd, imageUrl}) => {
+    const dispatch = useAppDispatch();
+
     const [image, setImage] = useState<ImageType>({
         preview: '',
         raw: ''
@@ -58,13 +61,18 @@ export const EditAircraft: React.FC<EditAircraftProps> = ({onAdd, onEdit, aircra
                         seats: (document.querySelector('#in_seats') as HTMLInputElement).valueAsNumber,
                         status: (document.querySelector('#in_status') as HTMLInputElement).value
                     }
+                    let airParam: EditAircraftType = {
+                        aircraft: aircraftEdit,
+                        image: image
+                    }
                     if (isAdd) {
                         console.log('add call')
-                        onAdd(aircraftEdit, image)
+                        //onAdd(aircraftEdit, image)
+                        dispatch(addAircraft(airParam));
                     } else {
                         aircraftEdit.id = aircraft?.id
                         console.log('edit_id = ', aircraftEdit.id)
-                        onEdit(aircraftEdit, image)
+                        dispatch(editAircraft(airParam));
                     }
                     setModalActive(false)
                 }

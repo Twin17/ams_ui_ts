@@ -1,13 +1,17 @@
 import {AircraftDto} from "../models/amsModels";
+import {DeleteAircraftType} from "../models/types"
+
+import { useAppDispatch  } from '../redux/store';
+import { deleteAircraft } from '../redux/asyncActions';
 
 export type DeleteAircraftProps = {
     aircraft?: AircraftDto;
-    onDelete: Function; 
     setDeleteActive: Function;
     imageUrl: React.MutableRefObject<string>;
 }
 
-export const DeleteAircraft: React.FC<DeleteAircraftProps> = ({aircraft, onDelete, setDeleteActive, imageUrl}) => {
+export const DeleteAircraft: React.FC<DeleteAircraftProps> = ({aircraft, setDeleteActive, imageUrl}) => {
+    const dispatch = useAppDispatch();
 
     return (
         <div className="param-conteiner">
@@ -21,7 +25,11 @@ export const DeleteAircraft: React.FC<DeleteAircraftProps> = ({aircraft, onDelet
                 <input id="del_seats" readOnly className="param-input" type="number"/>
                 <input id="del_status" readOnly className="param-input"/>
                 <button type="submit" id="delete-btn" onClick={() => {
-                    onDelete(aircraft?.id)
+                    //onDelete(aircraft?.id)
+                    let delParam: DeleteAircraftType = {
+                        id: aircraft?.id
+                    }
+                    dispatch(deleteAircraft(delParam))
                     setDeleteActive(false)
                 }
                 }>Удалить</button>

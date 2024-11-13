@@ -1,8 +1,11 @@
-// export const Header: React.FC<String> = (title: String) => {
-export const Header = () => {
+type HeaderProps = {
+    title: string;
+}
+
+export const Header: React.FC<HeaderProps> = ({title}) => {
     return (
         <header className="header">
-            {/* {title} */}
-            Список авиационной техники
-        </header>)
+            {title}
+        </header>
+    )
 }

@@ -7,13 +7,10 @@ import {AircraftDto} from "../models/amsModels";
 
 type AirsProps = {
     airs: AircraftDto[];
-    onAdd: Function;
-    onEdit: Function;
-    onDelete: Function;
 }
 
 // function Aircrafts (airs: AircraftDto[], onAdd: Function, onEdit: Function, onDelete: Function) {
-export const Aircrafts: React.FC<AirsProps> = ({airs, onAdd, onEdit, onDelete}) => {
+export const Aircrafts: React.FC<AirsProps> = ({airs}) => {
     const [editActive, setEditActive] = useState(false)
     const [deleteActive, setDeleteActive] = useState(false)
     const [aircraft, setAircraft] = useState<AircraftDto>()
@@ -22,14 +19,11 @@ export const Aircrafts: React.FC<AirsProps> = ({airs, onAdd, onEdit, onDelete}) 
 
     const deleteProps: DeleteAircraftProps = {
         aircraft,
-        onDelete,
         setDeleteActive,
         imageUrl
     }
 
     const editProps: EditAircraftProps = {
-        onAdd,
-        onEdit,
         aircraft,
         setModalActive: setEditActive,
         isAdd,
@@ -69,7 +63,9 @@ export const Aircrafts: React.FC<AirsProps> = ({airs, onAdd, onEdit, onDelete}) 
                         <th>Действия</th>
                     </tr>
                     {airs.map(el => (
-                        <Aircraft key={el.id} el={el} 
+                        <Aircraft 
+                            //href=
+                            key={el.id} el={el} 
                             setAircraft={setAircraft} 
                             setModalActive={setEditActive}
                             setDeleteActive={setDeleteActive}
