@@ -93,9 +93,7 @@ const aircraftSlice = createSlice({
 
       builder.addCase(deleteAircraft.fulfilled, (state, action) => {
         const rs = action.payload;
-
         if (rs.statusCode === 0) {
-          // setAircrafts(aircrafts.filter(el => el.id !== id))
           let newAircrafts = state.aircrafts.filter(el => el.id !== rs.id)
           state.aircrafts = newAircrafts;
         } else {

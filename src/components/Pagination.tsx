@@ -5,7 +5,7 @@ export type PaginationProps = {
 }
 
 export const Pagination: React.FC<PaginationProps> = ({page, pages, onChangePage}) => {
-    const maxBlocks = 4 // максимальное кол-во кубиков пагинации
+    const maxBlocks = 5 // максимальное кол-во кубиков пагинации
     const sideBlocks = Math.floor((maxBlocks - 1)/2) // кубиков слева и справа
     // Расчет для отображения кубиков пагинации
     let pgs = Math.min(maxBlocks, pages) // сколько кубиков нужно отрисовать
@@ -17,9 +17,6 @@ export const Pagination: React.FC<PaginationProps> = ({page, pages, onChangePage
 
     return (
         <ul id="ul_block" className="pagination">
-            {/* {[...Array(pages.current)].map((_,idx) => (
-                <li key={idx + 1} onClick={() => setPage(idx + 1)} className={page === (idx + 1) ? 'active' : ''}>{idx + 1}</li>
-            ))} */}
             <li key={-1} onClick={() => onChangePage(1)}>{'<<'}</li>
             {[...Array(pageZ - pageA + 1)].map((_,idx) => (
                 <li key={idx + pageA} onClick={() => onChangePage(idx + pageA)} className={page === (idx + pageA) ? 'active' : ''}>{idx + pageA}</li>

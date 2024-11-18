@@ -24,8 +24,7 @@ export const DeleteAircraft: React.FC<DeleteAircraftProps> = ({aircraft, setDele
                 <input id="del_year"  readOnly className="param-input" type="number"/>
                 <input id="del_seats" readOnly className="param-input" type="number"/>
                 <input id="del_status" readOnly className="param-input"/>
-                <button type="submit" id="delete-btn" onClick={() => {
-                    //onDelete(aircraft?.id)
+                <button type="button" id="delete-btn" onClick={() => {
                     let delParam: DeleteAircraftType = {
                         id: aircraft?.id
                     }

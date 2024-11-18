@@ -53,7 +53,7 @@ export const EditAircraft: React.FC<EditAircraftProps> = ({aircraft, setModalAct
                 <input id="in_year" placeholder="Год выпуска" required type="number" className="param-input"/>
                 <input id="in_seats" placeholder="Количество мест" required type="number" className="param-input"/>
                 <input id="in_status" placeholder="Статус" required className="param-input"/>
-                <button type="submit" id="save-btn" onClick={() => {
+                <button type="button" id="save-btn" onClick={() => {
                     let aircraftEdit: AircraftDto = {
                         model: (document.querySelector('#in_model') as HTMLInputElement).value,
                         manufacturer: (document.querySelector('#in_manuf')  as HTMLInputElement).value,
@@ -67,7 +67,6 @@ export const EditAircraft: React.FC<EditAircraftProps> = ({aircraft, setModalAct
                     }
                     if (isAdd) {
                         console.log('add call')
-                        //onAdd(aircraftEdit, image)
                         dispatch(addAircraft(airParam));
                     } else {
                         aircraftEdit.id = aircraft?.id

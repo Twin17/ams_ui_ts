@@ -1,8 +1,8 @@
-import {useEffect} from "react"
-import {Header} from "./Header"
-import {Aircrafts} from "./Aircrafts"
-import {Pagination} from "./Pagination"
-import {Status} from "../models/types"
+import { useEffect } from "react"
+import { Header } from "./Header"
+import { Aircrafts } from "./Aircrafts"
+import { Pagination } from "./Pagination"
+import { Status } from "../models/types"
 
 import { useSelector } from 'react-redux';
 import { useAppDispatch, selectAircrafts, selectFilters } from '../redux/store';
@@ -14,25 +14,28 @@ export const Main = () => {
 
     const { aircrafts, pages, status } = useSelector(selectAircrafts);
     const { page } = useSelector(selectFilters);
+    // const [page, setPage] = useState(1);
 
     const pageSize = 4 // кол-во строк на странице
 
     const onChangePage = (num: number) => {
         dispatch(setCurrentPage(num));
+        // setPage(num);
     }
 
-    const getItems = async () => {
-        dispatch(
-            fetchAircrafts({
-                pageNum: page,
-                pageSize: pageSize
-            })
-        );
-        window.scrollTo(0, 0);
-    };
+    // const getItems = async () => {
+    //     dispatch(
+    //         fetchAircrafts({
+    //             pageNum: page,
+    //             pageSize: pageSize
+    //         })
+    //     );
+    //     window.scrollTo(0, 0);
+    // };
 
     useEffect(() => {
-        getItems();
+        // getItems();
+        dispatch(fetchAircrafts({pageNum: page, pageSize: pageSize}));
     }, [page]);
 
     return (

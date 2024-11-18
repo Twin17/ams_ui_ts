@@ -1,15 +1,14 @@
-import {useState, useRef} from "react"
-import {Aircraft} from "./Aircraft"
-import {Modal} from "./Modal"
-import {EditAircraft, EditAircraftProps} from "./EditAircraft"
-import {DeleteAircraft, DeleteAircraftProps} from "./DeleteAircraft"
-import {AircraftDto} from "../models/amsModels";
+import { useState, useRef } from "react"
+import { Aircraft } from "./Aircraft"
+import { Modal } from "./Modal"
+import { EditAircraft } from "./EditAircraft"
+import { DeleteAircraft, DeleteAircraftProps } from "./DeleteAircraft"
+import { AircraftDto } from "../models/amsModels";
 
 type AirsProps = {
     airs: AircraftDto[];
 }
 
-// function Aircrafts (airs: AircraftDto[], onAdd: Function, onEdit: Function, onDelete: Function) {
 export const Aircrafts: React.FC<AirsProps> = ({airs}) => {
     const [editActive, setEditActive] = useState(false)
     const [deleteActive, setDeleteActive] = useState(false)
@@ -23,12 +22,12 @@ export const Aircrafts: React.FC<AirsProps> = ({airs}) => {
         imageUrl
     }
 
-    const editProps: EditAircraftProps = {
-        aircraft,
-        setModalActive: setEditActive,
-        isAdd,
-        imageUrl
-    }
+    // const editProps: EditAircraftProps = {
+    //     aircraft,
+    //     setModalActive: setEditActive,
+    //     isAdd,
+    //     imageUrl
+    // }
 
     if (airs.length > 0)
         return (
@@ -45,7 +44,8 @@ export const Aircrafts: React.FC<AirsProps> = ({airs}) => {
                 }>Добавить</button>
                 <Modal active={editActive} setActive={setEditActive}>
                     {/* <EditAircraft className="editAircraft" {...editProps}/> */}
-                    <EditAircraft {...editProps}/>
+                    {/* <EditAircraft {...editProps}/> */}
+                    <EditAircraft aircraft={aircraft} setModalActive={setEditActive} isAdd={isAdd} imageUrl={imageUrl}/>
                 </Modal>
                 <Modal active={deleteActive} setActive={setDeleteActive}>
                     {/* <DeleteAircraft className="deleteAircraft" {...deleteProps}/> */}
@@ -64,7 +64,6 @@ export const Aircrafts: React.FC<AirsProps> = ({airs}) => {
                     </tr>
                     {airs.map(el => (
                         <Aircraft 
-                            //href=
                             key={el.id} el={el} 
                             setAircraft={setAircraft} 
                             setModalActive={setEditActive}

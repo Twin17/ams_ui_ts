@@ -1,5 +1,10 @@
-import {IoCloseCircleSharp, IoDocument} from 'react-icons/io5'
-import {AircraftDto} from "../models/amsModels";
+import { IoCloseCircleSharp, IoDocument } from 'react-icons/io5'
+import { AircraftDto } from "../models/amsModels";
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useAppDispatch, selectInfo } from '../redux/store';
+import { fetchModelInfo } from '../redux/asyncActions';
+import { setInfo } from '../redux/infoSlice';
 
 type AircraftProps = {
     el: AircraftDto; 
@@ -11,6 +16,9 @@ type AircraftProps = {
 }
 
 export const Aircraft: React.FC<AircraftProps> = ({el, setAircraft, setModalActive, setDeleteActive, setIsAdd, imageUrl}) => {
+    const dispatch = useAppDispatch();
+
+    const { modelInfoList } = useSelector(selectInfo);
 
     const onEditIconAction = (el: AircraftDto) => {
         if (el.id) (document.querySelector('#in_id') as HTMLInputElement).value = el.id.toString();
@@ -37,13 +45,23 @@ export const Aircraft: React.FC<AircraftProps> = ({el, setAircraft, setModalActi
         setDeleteActive(true);
     }
 
+    const onModelClick = (model: string, manufacturer: string) => {
+        const info = modelInfoList.filter(el => el.model === model);
+        if (info?.length) {
+            dispatch(setInfo(info[0]));
+        } else {
+            dispatch(fetchModelInfo({model, manufacturer}));
+        }
+    }
+
     return (
         <tr>
             <td>
                 {/* <img src="https://reqres.in/img/faces/9-image.jpg" alt="" className="row-image"/> */}
                 <img src={'http://localhost:8080/api/amsmainfile/' + el.id} alt="" className="row-image"/>
             </td>
-            <td>{el.model}</td>
+            {/* <td>{el.model}</td> */}
+            <td><Link to='/info' onClick={() => onModelClick(el.model, el.manufacturer)}>{el.model}</Link></td>
             <td>{el.manufacturer}</td>
             <td>{el.releaseYear}</td>
             <td>{el.seats}</td>

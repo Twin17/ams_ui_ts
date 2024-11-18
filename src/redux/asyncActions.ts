@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AircraftRs, UpdateAircraftRs, AddAircraftRs, DeleteAircraftRs } from "../models/amsModels";
-import { SearchParams, ImageType, EditAircraftType, DeleteAircraftType } from '../models/types';
+import { AircraftRs, UpdateAircraftRs, AddAircraftRs, DeleteAircraftRs, ModelInfoDto } from "../models/amsModels";
+import { SearchParams, ImageType, EditAircraftType, DeleteAircraftType, SearchInfoParams } from '../models/types';
 
 const mainHost = 'http://localhost:8080'
 const getAircraftsUrl = mainHost + '/api/getAircrafts'
@@ -9,6 +9,7 @@ const addAircraftUrl = mainHost + '/api/addAircraft'
 const updateAircraftUrl = mainHost + '/api/updateAircraft'
 const deleteAircraftUrl = mainHost + '/api/deleteAircraft'
 const saveImageUrl = mainHost + '/api/amsfile/save'
+const getInfoHost = 'https://api.api-ninjas.com/v1/aircraft'
 
 export const fetchAircrafts = createAsyncThunk<AircraftRs, SearchParams>(
     'aircrafts/fetch',
@@ -98,4 +99,18 @@ export const saveImageToDb = async (id: number, image?: ImageType) => {
         alert('Ошибка сохранения рисунка в БД')
     });
 }
+
+export const fetchModelInfo = createAsyncThunk<ModelInfoDto[], SearchInfoParams>(
+    'model/info',
+    async (params) => {
+        const { model, manufacturer } = params;
+        // const getInfoUrl = getInfoHost + '?manufacturer=' + manufacturer + '&model=' + model;
+        const getInfoUrl = getInfoHost + '?model=' + model;
+        console.log('getInfoUrl', getInfoUrl);
+        const { data } = await axios.get<ModelInfoDto[]>(getInfoUrl, {
+            headers: {'X-Api-Key': 'ukVOPdjL6gHHp25h3rbo3PEg3NtHzww4MXRymG4y'}
+        });
+        return data;
+    }
+);
   

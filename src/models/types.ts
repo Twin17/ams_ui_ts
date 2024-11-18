@@ -31,3 +31,8 @@ export type SearchParams = {
     pageNum: number;
     pageSize: number;
 }
+
+export type SearchInfoParams = {
+    model: string;
+    manufacturer: string;
+}
